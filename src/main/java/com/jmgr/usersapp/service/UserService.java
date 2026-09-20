@@ -1,29 +1,37 @@
 package com.jmgr.usersapp.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jmgr.usersapp.models.UserDTO;
 import com.jmgr.usersapp.repository.IUserRepository;
-import com.jmgr.usersapp.models.mapper.IUserMapper;
 
-import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+
+import com.jmgr.usersapp.models.mapper.IUserMapper;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor 
+@Log
 public class UserService implements IUserService {
 
-    private final IUserRepository userRepository;
-    private final IUserMapper userMapper;
+    @Autowired
+    private IUserRepository userRepository;
+    @Autowired
+    private IUserMapper userMapper;
+
 
     /**
      * Service implementation for managing users.
      */
     @Override
     public List<UserDTO> findAll() {
+        List<com.jmgr.usersapp.models.entity.User> users = userRepository.findAll();
+        log.info("Retrieved users: " + users.size());
         return userRepository.findAll()
                              .stream()
                              .map(userMapper::toUserDTO)

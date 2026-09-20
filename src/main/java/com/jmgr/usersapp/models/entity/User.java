@@ -4,13 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter 
-@Setter 
+import java.io.Serializable;
+
+@Getter
+@Setter
 @Entity 
 @Table(name = "users")
 public class User implements Serializable {
@@ -21,7 +23,8 @@ public class User implements Serializable {
      * The unique identifier for the user.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
     private Long id; 
     /**
      * The first name of the user.

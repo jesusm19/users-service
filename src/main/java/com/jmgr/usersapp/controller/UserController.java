@@ -15,16 +15,18 @@ import org.springframework.http.ResponseEntity;
 import com.jmgr.usersapp.service.IUserService;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@AllArgsConstructor 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
     private final IUserService userService;
+
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Retrieves all users.
