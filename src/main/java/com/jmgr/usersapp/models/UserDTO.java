@@ -2,6 +2,7 @@ package com.jmgr.usersapp.models;
 import java.io.Serializable;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder 
+@AllArgsConstructor 
 public class UserDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -16,7 +18,6 @@ public class UserDTO implements Serializable {
     /**
      * The unique identifier for the user.
      */
-    @NotNull (message = "Id cannot be null")
     private Long id; 
     /**
      * The first name of the user.
