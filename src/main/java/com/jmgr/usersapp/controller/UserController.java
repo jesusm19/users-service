@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.jmgr.usersapp.models.UserDTO;
@@ -19,6 +20,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
