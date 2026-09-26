@@ -8,7 +8,6 @@ import com.jmgr.usersapp.models.UserDTO;
 import com.jmgr.usersapp.repository.IUserRepository;
 
 import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 
 import com.jmgr.usersapp.models.mapper.IUserMapper;
 

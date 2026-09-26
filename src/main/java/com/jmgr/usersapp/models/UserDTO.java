@@ -1,7 +1,9 @@
 package com.jmgr.usersapp.models;
 import java.io.Serializable;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,11 +35,13 @@ public class UserDTO implements Serializable {
      * The email address of the user.
      */
     @NotNull(message = "Email cannot be null")
+    @Email(message = "Email should be valid")
     private String email;
     /**
      * The username of the user.
      */
     @NotNull(message = "Username cannot be null")
+    @Size(min = 4, max = 12, message = "Username must be between 4 and 12 characters")
     private String username;
     /**
      * The password of the user.
