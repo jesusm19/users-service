@@ -8,7 +8,8 @@ import com.jmgr.usersapp.models.UserDTO;
 import com.jmgr.usersapp.repository.IUserRepository;
 
 import lombok.extern.java.Log;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.jmgr.usersapp.models.mapper.IUserMapper;
 
 import java.util.List;
@@ -35,6 +36,14 @@ public class UserService implements IUserService {
                              .stream()
                              .map(userMapper::toUserDTO)
                              .toList();
+    }
+
+    @Override
+    public Page<UserDTO> findAll(Pageable pageable) {
+        // Fetch a page of users from the repository
+        Page<com.jmgr.usersapp.models.entity.User> usersPage = userRepository.findAll(pageable);
+        // Map the entities to DTOs
+        return usersPage.map(userMapper::toUserDTO);
     }
 
     /**

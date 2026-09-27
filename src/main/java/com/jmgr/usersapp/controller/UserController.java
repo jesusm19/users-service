@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.jmgr.usersapp.models.UserDTO;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.jmgr.usersapp.service.IUserService;
@@ -38,6 +40,16 @@ public class UserController {
     @GetMapping("/findAll")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
+    }
+
+    /**
+     * Retrieves all users in a paginated manner.
+     * @return a ResponseEntity containing the page of users
+     */
+    @GetMapping("/findAllPaged/{page}")
+    public ResponseEntity<Page<UserDTO>> getAllUsersPaged(@PathVariable int page) {
+        Pageable pageable = Pageable.ofSize(5).withPage(page);
+        return ResponseEntity.ok(userService.findAll(pageable));
     }
 
     /**
