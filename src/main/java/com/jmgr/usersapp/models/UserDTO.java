@@ -1,5 +1,6 @@
 package com.jmgr.usersapp.models;
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -48,4 +49,8 @@ public class UserDTO implements Serializable {
      */
     @NotNull(message = "Password cannot be null")
     private String password;
+    /**
+     * The roles assigned to the user.
+     */
+    private List<RoleDTO> roles;
 }

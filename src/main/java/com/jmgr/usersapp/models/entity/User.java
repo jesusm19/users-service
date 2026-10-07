@@ -1,15 +1,22 @@
 package com.jmgr.usersapp.models.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import com.jmgr.usersapp.models.entity.Role;
 
 @Getter
 @Setter
@@ -46,5 +53,16 @@ public class User implements Serializable {
      * The password of the user.
      */
     private String password;
+    /**
+     * The roles assigned to the user.
+     */
+    @ManyToMany
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"),
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+    )
+    private List<Role> roles = new ArrayList<>();
 
 }
