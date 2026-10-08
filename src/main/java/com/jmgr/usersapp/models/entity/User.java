@@ -58,7 +58,7 @@ public class User implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "user_roles",
+        name = "users_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"),
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
