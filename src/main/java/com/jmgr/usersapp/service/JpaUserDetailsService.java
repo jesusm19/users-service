@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +17,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.jmgr.usersapp.models.entity.User;
 import com.jmgr.usersapp.repository.IUserRepository;
 
+
 @Service 
 public class JpaUserDetailsService implements UserDetailsService {
 
     @Autowired 
     private IUserRepository userRepository;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByUsername(username);

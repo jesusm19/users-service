@@ -16,7 +16,6 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import com.jmgr.usersapp.models.entity.Role;
 
 @Getter
 @Setter
