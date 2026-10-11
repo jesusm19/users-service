@@ -17,8 +17,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.jmgr.usersapp.models.entity.User;
 import com.jmgr.usersapp.repository.IUserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service 
+@Slf4j
 public class JpaUserDetailsService implements UserDetailsService {
 
     @Autowired 
@@ -27,6 +30,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Entra JpaUserDetailsService.loadUserByUsername: {}", username);
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if(optionalUser.isEmpty()){
             throw new UsernameNotFoundException(String.format("El usuario %s no existe", username));
@@ -37,7 +41,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             .stream()
             .map(role -> new SimpleGrantedAuthority(role.getName()))
             .collect(Collectors.toList());
-
+        log.info("Sale JpaUserDetailsService.loadUserByUsername: authorities={}", authorities);
         return new org.springframework.security.core.userdetails.User(
             username, userEntity.getPassword(), true, true, true, true, authorities);
     }

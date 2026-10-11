@@ -76,6 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Claims claims = Jwts
             .claims()
             .add("authorities", new ObjectMapper().writeValueAsString(authorities))
+            .add("username", username)
             .build();
 
         String jwt = Jwts.builder()
@@ -102,8 +103,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
-        // TODO Auto-generated method stub
-        super.unsuccessfulAuthentication(request, response, failed);
+        logger.info("Entra JwtAuthenticationFilter.unsuccessfulAuthentication");
+
+        Map<String, String> body = new HashMap<>();
+        body.put("message", "Error de autenticación");
+        body.put("error", failed.getMessage());
+        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        response.setContentType(CONTENT_TYPE);
+        response.setStatus(401);
+
+        logger.info("Sale JwtAuthenticationFilter.unsuccessfulAuthentication");
     }
 
     

@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import com.jmgr.usersapp.auth.filter.JwtAuthenticationFilter;
+import com.jmgr.usersapp.auth.filter.JwtValidationFilter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +49,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, BASE_PATH + "delete/{id}").hasRole("ADMIN")
                 .anyRequest().authenticated())
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+        .addFilter(new JwtValidationFilter(authenticationManager()))
         .csrf(config -> config.disable())
         .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .build();
