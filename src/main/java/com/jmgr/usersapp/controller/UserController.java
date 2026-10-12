@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import com.jmgr.usersapp.service.IUserService;
 
 import jakarta.validation.Valid;
+import com.jmgr.usersapp.models.UserUpdateDTO;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -81,7 +82,7 @@ public class UserController {
      * @return a ResponseEntity containing the updated user
      */
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userDTO) {
         UserDTO updatedUser = userService.update(id, userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
     }
