@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jmgr.usersapp.models.IUser;
 import com.jmgr.usersapp.models.UserDTO;
 import com.jmgr.usersapp.models.UserUpdateDTO;
 import com.jmgr.usersapp.models.entity.Role;
@@ -75,10 +76,7 @@ public class UserService implements IUserService {
     @Transactional 
     public UserDTO save(UserDTO user) {
         var userEntity = userMapper.toUser(user);
-        List<Role> roles = new ArrayList<>();
-        Optional<Role> optionalRoles = roleRepository.findByName("ROLE_USER");
-        optionalRoles.ifPresent(roles::add);
-        userEntity.setRoles(roles);
+        userEntity.setRoles(getRoles(user.isAdmin()));
 
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         return userMapper.toUserDTO(userRepository.save(userEntity));
@@ -102,6 +100,7 @@ public class UserService implements IUserService {
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setName(userDTO.getName());
         userEntity.setLastname(userDTO.getLastname());
+        userEntity.setRoles(getRoles(userDTO.isAdmin()));
 
         return userMapper.toUserDTO(userRepository.save(userEntity));
     }
@@ -121,4 +120,20 @@ public class UserService implements IUserService {
         return false;
     }
 
+    /**
+     * Retrieves the list of roles based on the administrative status of the user.
+     * @param isAdmin indicates whether the user has administrative privileges
+     * @return the list of roles assigned to the user   
+     */
+    private List<Role> getRoles(boolean isAdmin) {
+        List<Role> roles = new ArrayList<>();
+        Optional<Role> optionalRoles = roleRepository.findByName("ROLE_USER");
+        optionalRoles.ifPresent(roles::add);
+
+        if (isAdmin) {
+            Optional<Role> optionalAdminRole = roleRepository.findByName("ROLE_ADMIN");
+            optionalAdminRole.ifPresent(roles::add);
+        }
+        return roles;
+    }
 }

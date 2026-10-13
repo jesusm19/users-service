@@ -53,4 +53,8 @@ public class UserDTO implements Serializable {
      * The roles assigned to the user.
      */
     private List<RoleDTO> roles;
+    /**
+     * Indicates whether the user has administrative privileges.
+     */
+    private boolean isAdmin;
 }

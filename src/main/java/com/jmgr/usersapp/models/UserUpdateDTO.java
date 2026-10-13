@@ -44,4 +44,9 @@ public class UserUpdateDTO implements Serializable {
     @Size(min = 4, max = 12, message = "Username must be between 4 and 12 characters")
     private String username;
 
+    /**
+     * Indicates whether the user has administrative privileges.
+     */
+    private boolean isAdmin;
+
 }

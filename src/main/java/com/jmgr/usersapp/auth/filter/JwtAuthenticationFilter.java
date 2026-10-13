@@ -73,10 +73,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         org.springframework.security.core.userdetails.User userPrincipal = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
         String username = userPrincipal.getUsername();
         Collection<? extends GrantedAuthority> authorities = userPrincipal.getAuthorities();
+        boolean isAdmin = authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
         Claims claims = Jwts
             .claims()
             .add("authorities", new ObjectMapper().writeValueAsString(authorities))
             .add("username", username)
+            .add("isAdmin", isAdmin)
             .build();
 
         String jwt = Jwts.builder()

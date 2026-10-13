@@ -1,4 +1,7 @@
 package com.jmgr.usersapp.models.entity;
+import jakarta.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jmgr.usersapp.models.IUser;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.UniqueConstraint;
@@ -22,7 +25,7 @@ import java.util.List;
 @Entity 
 @Table(name = "users")
 public class User implements Serializable {
-    
+     
     private static final long serialVersionUID = 1L;
 
     /**
@@ -62,6 +65,9 @@ public class User implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "role_id"),
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
     )
+    /**
+     * The list of roles assigned to the user.
+     */
     private List<Role> roles = new ArrayList<>();
 
 }
